@@ -9,7 +9,7 @@ namespace Timesheets.Data.Inplementation
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        public void Add()
+        public void Add(Employee employee)
         {
             throw new NotImplementedException();
         }

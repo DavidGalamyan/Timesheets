@@ -9,7 +9,7 @@ namespace Timesheets.Data.Inplementation
 {
     public class SheetRepository : ISheetRepository
     {
-        private List<Sheet> _sheetList = new List<Sheet>()
+        private static List<Sheet> _SheetList = new List<Sheet>()
         {
            new Sheet(){ Id = Guid.Parse("53166AA6-2D90-63F1-E332-AA2091CCA4E7"),
               Date = DateTime.Parse("2021-08-09"),
@@ -32,16 +32,18 @@ namespace Timesheets.Data.Inplementation
               ContractId = Guid.Parse("93032B8E-B9DB-89FF-6EE5-AE2722BB23D1"),
               ServiceId = Guid.Parse("70B9547C-369B-085D-D440-C2A63B36F89A"), Amount = 4 }
         };
-        public void Add()
+
+        public void Add(Sheet sheet)
         {
-            throw new NotImplementedException();
+            _SheetList.Add(sheet);
         }
 
         public Sheet GetItem(Guid id)
         {
-            throw new NotImplementedException();
+            var result = _SheetList.FirstOrDefault(sheet => id == sheet.Id);
+            return result;
         }
-
+        
         public IEnumerable<Sheet> GetItems()
         {
             throw new NotImplementedException();

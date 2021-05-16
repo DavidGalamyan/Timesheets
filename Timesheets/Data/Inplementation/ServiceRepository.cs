@@ -9,7 +9,7 @@ namespace Timesheets.Data.Inplementation
 {
     public class ServiceRepository : IServiceRepository
     {
-        public void Add()
+        public void Add(Service service)
         {
             throw new NotImplementedException();
         }

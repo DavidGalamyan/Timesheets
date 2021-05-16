@@ -9,7 +9,7 @@ namespace Timesheets.Data.Inplementation
 {
     public class ClientRepository : IClientRepository
     {
-        public void Add()
+        public void Add(Client client)
         {
             throw new NotImplementedException();
         }

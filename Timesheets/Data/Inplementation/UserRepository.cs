@@ -9,7 +9,7 @@ namespace Timesheets.Data.Inplementation
 {
     public class UserRepository : IUserRepository
     {
-        public void Add()
+        public void Add(User user)
         {
             throw new NotImplementedException();
         }
