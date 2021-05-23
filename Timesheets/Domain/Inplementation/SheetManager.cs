@@ -15,7 +15,7 @@ namespace Timesheets.Domain.Inplementation
             _sheetRepository = sheetRepository;
         }
 
-        public Guid Create(SheetCreateRequest sheetRequest)
+        public Guid Create(SheetRequest sheetRequest)
         {
             var sheet = new Sheet()
             {

@@ -11,6 +11,5 @@ namespace Timesheets.Data.Interfaces
         IEnumerable<T> GetItems();
         void Add(T item);
         void Update();
-
     }
 }

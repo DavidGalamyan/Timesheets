@@ -23,7 +23,7 @@ namespace Timesheets.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public IActionResult Create([FromBody] SheetCreateRequest sheet)
+        public IActionResult Create([FromBody] SheetRequest sheet)
         {
             var id = _sheetManager.Create(sheet);
             return Ok(id);

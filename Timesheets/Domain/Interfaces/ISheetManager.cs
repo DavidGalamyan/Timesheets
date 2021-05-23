@@ -7,6 +7,6 @@ namespace Timesheets.Domain.Interfaces
     public interface ISheetManager
     {
         public Sheet GetItem(Guid id);
-        public Guid Create(SheetCreateRequest sheet);
+        public Guid Create(SheetRequest sheet);
     }
 }
