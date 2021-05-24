@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Timesheets.Data;
+using Timesheets.Data.EntityFramework;
 using Timesheets.Data.Inplementation;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Inplementation;
@@ -27,6 +27,8 @@ namespace Timesheets
         {
             services.AddDbContext<TimesheetDbContext>(options 
                 => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IContractRepository, ContractRepository>();
+            services.AddScoped<IContractManager, ContractManager>();
             services.AddScoped<ISheetRepository, SheetRepository>();
             services.AddScoped<ISheetManager, SheetManager>();
             services.AddControllers();

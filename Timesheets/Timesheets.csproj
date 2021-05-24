@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\EntityFramework\Configurations\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

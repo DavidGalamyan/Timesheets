@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Timesheets.Models
 {
@@ -11,5 +9,6 @@ namespace Timesheets.Models
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public ICollection<Sheet> Sheets { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Timesheets.Models
 {
@@ -13,7 +11,7 @@ namespace Timesheets.Models
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public string Description { get; set; }
-     // public List<Service> Services { get; set; }
         public ICollection<Sheet> Sheets { get; set; } 
+        public bool IsDeleted { get; set; }
     }
 }

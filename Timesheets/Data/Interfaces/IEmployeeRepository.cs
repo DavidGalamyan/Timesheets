@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Timesheets.Models;
+﻿using Timesheets.Models;
 
 namespace Timesheets.Data.Interfaces
 {
-    public interface IEmployeeRepository : IBaseRepository <Employee>
+    public interface IEmployeeRepository : IBaseRepository<Employee>
     {
     }
 }

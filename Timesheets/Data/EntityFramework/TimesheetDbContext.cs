@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Timesheets.Models;
 
-namespace Timesheets.Data
+namespace Timesheets.Data.EntityFramework
 {
     public class TimesheetDbContext:DbContext
     {

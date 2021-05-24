@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Timesheets.Data.EntityFramework;
 using Timesheets.Data.Interfaces;
 using Timesheets.Models;
 
@@ -9,24 +10,50 @@ namespace Timesheets.Data.Inplementation
 {
     public class ContractRepository : IContractRepository
     {
-        public void Add(Contract contract)
+        private readonly TimesheetDbContext _dbContext;
+
+        public ContractRepository(TimesheetDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Contract GetItem(Guid id)
+        public async Task Add(Contract contract)
         {
-            throw new NotImplementedException();
+            await _dbContext.Contracts.AddAsync(contract);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<Contract> GetItems()
+        public async Task<bool?> CheckContractIsActive(Guid id)
         {
-            throw new NotImplementedException();
+            var contract = await _dbContext.Contracts.FindAsync(id);
+            var now = DateTime.Now;
+            var isActive = now >= contract?.DateStart && now <= contract?.DateEnd;
+            return isActive;
         }
 
-        public void Update()
+        public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await GetItem(id);
+            //_dbContext.Contracts.Remove(result);
+            //await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Contract> GetItem(Guid id)
+        {
+            var result = await _dbContext.Contracts.FindAsync(id);
+            return result;
+        }
+
+        public async Task<IEnumerable<Contract>> GetItems()
+        {
+            var result = await _dbContext.Contracts.ToListAsync();
+            return result;
+        }
+
+        public async Task Update(Contract contract)
+        {
+            _dbContext.Contracts.Update(contract);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
