@@ -7,7 +7,7 @@ using Timesheets.Domain.Interfaces;
 using Timesheets.Models;
 using Timesheets.Models.Dto;
 
-namespace Timesheets.Domain.Inplementation
+namespace Timesheets.Domain.Implementation
 {
     public class UserManager : IUserManager
     {

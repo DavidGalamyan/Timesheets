@@ -6,7 +6,7 @@ using Timesheets.Data.EntityFramework;
 using Timesheets.Data.Interfaces;
 using Timesheets.Models;
 
-namespace Timesheets.Data.Inplementation
+namespace Timesheets.Data.Implementation
 {
     public class EmployeeRepository : IEmployeeRepository
     {
@@ -25,9 +25,10 @@ namespace Timesheets.Data.Inplementation
 
         public async Task Delete(Guid id)
         {
-            var result = await GetItem(id);
-            //_dbContext.Employees.Remove(result);
-            //await _dbContext.SaveChangesAsync();
+            var employee = await GetItem(id);
+            employee.IsDeleted = true;
+            _dbContext.Employees.Update(employee);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<Employee> GetItem(Guid id)

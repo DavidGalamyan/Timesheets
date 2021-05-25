@@ -7,5 +7,6 @@ namespace Timesheets.Models
         /// <summary> Информация о пользователе системы </summary>
         public Guid Id { get; set; }
         public string Username { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

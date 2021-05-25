@@ -1,15 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Timesheets.Data.EntityFramework;
-using Timesheets.Data.Inplementation;
-using Timesheets.Data.Interfaces;
-using Timesheets.Domain.Inplementation;
-using Timesheets.Domain.Interfaces;
+using Timesheets.Infrastructure.Extensions;
 
 namespace Timesheets
 {
@@ -25,17 +19,13 @@ namespace Timesheets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TimesheetDbContext>(options 
-                => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IContractRepository, ContractRepository>();
-            services.AddScoped<IContractManager, ContractManager>();
-            services.AddScoped<ISheetRepository, SheetRepository>();
-            services.AddScoped<ISheetManager, SheetManager>();
+            services.ConfigureDbContext(Configuration);
+            services.ConfigureAuthentication(Configuration);
+            services.ConfigureRepositories();
+            services.ConfigureDomainManagers();
+            services.ConfigureBackendSwagger();
+
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Timesheets", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

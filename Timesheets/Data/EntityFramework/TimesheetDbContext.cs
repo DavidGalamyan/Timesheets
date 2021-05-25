@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Timesheets.Data.EntityFramework.Configurations;
 using Timesheets.Models;
 
 namespace Timesheets.Data.EntityFramework
@@ -17,23 +18,13 @@ namespace Timesheets.Data.EntityFramework
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Client>().ToTable("Clients");
-            modelBuilder.Entity<Contract>().ToTable("Contracts");
-            modelBuilder.Entity<Service>().ToTable("Services");
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Employee>().ToTable("Employees");
-
-            modelBuilder.Entity<Sheet>().HasOne(sheet => sheet.Contract)
-                .WithMany(contract => contract.Sheets)
-                .HasForeignKey("ContractId");
-
-            modelBuilder.Entity<Sheet>().HasOne(sheet => sheet.Employee)
-                .WithMany(employee => employee.Sheets)
-                .HasForeignKey("EmployeeId");
-
-            modelBuilder.Entity<Sheet>().HasOne(sheet => sheet.Service)
-                .WithMany(service => service.Sheets)
-                .HasForeignKey("ServiceId");
+            modelBuilder.ApplyConfiguration(new ClientConfiguration());
+            modelBuilder.ApplyConfiguration(new ContractConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
+            modelBuilder.ApplyConfiguration(new ServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new SheetConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }
