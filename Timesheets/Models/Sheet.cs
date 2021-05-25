@@ -4,7 +4,7 @@ namespace Timesheets.Models
 {
     public class Sheet
     {
-        /// <summary> Информация о затраченном времени сотрудников </summary>
+        /// <summary> Ведомость о затраченном времени сотрудников </summary>
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public Guid EmployeeId { get; set; }

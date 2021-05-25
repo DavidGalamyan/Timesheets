@@ -2,6 +2,7 @@
 
 namespace Timesheets.Models.Dto
 {
+    /// <summary>Dto модель запроса, для контракта </summary>
     public class ContractRequest
     {
         public string Title { get; set; }
