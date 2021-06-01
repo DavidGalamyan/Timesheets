@@ -8,13 +8,23 @@ using Timesheets.Models.Dto;
 
 namespace Timesheets.Domain.Implementation
 {
-    public class SheetManager : ISheetManager
+    public class SheetManager: ISheetManager
     {
-        private readonly ISheetRepository _sheetRepository;
-        
-        public SheetManager(ISheetRepository sheetRepository)
+        private readonly ISheetRepo _sheetRepo;
+
+        public SheetManager(ISheetRepo sheetRepo)
         {
-            _sheetRepository = sheetRepository;
+            _sheetRepo = sheetRepo;
+        }
+
+        public async Task<Sheet> GetItem(Guid id)
+        {
+            return await _sheetRepo.GetItem(id);
+        }
+
+        public async Task<IEnumerable<Sheet>> GetItems()
+        {
+            return await _sheetRepo.GetItems();
         }
 
         public async Task<Guid> Create(SheetRequest sheetRequest)
@@ -23,46 +33,30 @@ namespace Timesheets.Domain.Implementation
             {
                 Id = Guid.NewGuid(),
                 Amount = sheetRequest.Amount,
-                Date = sheetRequest.Date,
                 ContractId = sheetRequest.ContractId,
+                Date = sheetRequest.Date,
                 EmployeeId = sheetRequest.EmployeeId,
-                ServiceId = sheetRequest.ServiceId                
+                ServiceId = sheetRequest.ServiceId
             };
-            await _sheetRepository.Add(sheet);
-            var result = sheet.Id;
-            return result;
-                
-        }
-
-        public Task Delete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Sheet> GetItem(Guid id)
-        {
-            var result = await _sheetRepository.GetItem(id);
-            return result;
-        }
-
-        public async Task<IEnumerable<Sheet>> GetItems()
-        {
-            var result = await _sheetRepository.GetItems();
-            return result;
+            
+            await _sheetRepo.Add(sheet);
+            
+            return sheet.Id;
         }
 
         public async Task Update(Guid id, SheetRequest sheetRequest)
         {
-            var sheet = new Sheet()
+            var sheet = new Sheet
             {
                 Id = id,
                 Amount = sheetRequest.Amount,
-                Date = sheetRequest.Date,
                 ContractId = sheetRequest.ContractId,
+                Date = sheetRequest.Date,
                 EmployeeId = sheetRequest.EmployeeId,
                 ServiceId = sheetRequest.ServiceId
             };
-            await _sheetRepository.Update(sheet);            
+            
+            await _sheetRepo.Update(sheet);
         }
     }
 }
