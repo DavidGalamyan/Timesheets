@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Timesheets.Models;
-using Timesheets.Models.Dto;
 
 namespace Timesheets.Domain.Interfaces
 {
-    public interface IContractManager : IBaseManager<Contract,ContractRequest>
+    public interface IContractManager
     {
-       public Task<bool?> CheckContractIsActive(Guid id);
+        Task<bool?> CheckContractIsActive(Guid id);
     }
 }

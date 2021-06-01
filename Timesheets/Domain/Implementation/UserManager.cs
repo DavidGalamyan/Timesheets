@@ -1,59 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Timesheets.Data.Interfaces;
 using Timesheets.Domain.Interfaces;
+using Timesheets.Infrastructure.Extensions;
 using Timesheets.Models;
 using Timesheets.Models.Dto;
 
 namespace Timesheets.Domain.Implementation
 {
-    public class UserManager : IUserManager
+    public class UserManager: IUserManager
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepo _userRepo;
 
-        public UserManager(IUserRepository userRepository)
+        public UserManager(IUserRepo userRepo)
         {
-            _userRepository = userRepository;
+            _userRepo = userRepo;
         }
 
-        public async Task<Guid> Create(UserRequest request)
+        public async Task<User> GetUser(LoginRequest request)
         {
-            var user = new User()
+            var passwordHash = GetPasswordHash(request.Password);
+            var user = await _userRepo.GetByLoginAndPasswordHash(request.Login, passwordHash);
+
+            return user;
+        }
+
+        public async Task<Guid> CreateUser(CreateUserRequest request)
+        {
+            request.EnsureNotNull(nameof(request));
+            
+            var user = new User
             {
                 Id = Guid.NewGuid(),
-                Username = request.Username
+                Username = request.Username,
+                PasswordHash = GetPasswordHash(request.Password),
+                Role = request.Role
             };
-            await _userRepository.Add(user);
+
+            await _userRepo.CreateUser(user);
+
             return user.Id;
         }
-
-        public async Task Delete(Guid id)
+        public async Task<User> SearchUserByGuid(Guid guid)
         {
-            await _userRepository.Delete(id);
-        }
-
-        public async Task<User> GetItem(Guid id)
-        {
-            var result = await _userRepository.GetItem(id);
+            var result = await _userRepo.SearchUserByGuid(guid);
             return result;
         }
 
-        public async Task<IEnumerable<User>> GetItems()
+        private static byte[] GetPasswordHash(string password)
         {
-            var result = await _userRepository.GetItems();
-            return result;
-        }
-
-        public async Task Update(Guid id, UserRequest request)
-        {
-            var user = new User()
+            using (var sha1 = new SHA1CryptoServiceProvider())
             {
-                Id = id,
-                Username = request.Username
-            };
-            await _userRepository.Update(user);
+                return sha1.ComputeHash(Encoding.Unicode.GetBytes(password));
+            }
         }
     }
 }

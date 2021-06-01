@@ -2,11 +2,12 @@
 
 namespace Timesheets.Models
 {
+    /// <summary> Информация о пользователе системы </summary>
     public class User
     {
-        /// <summary> Информация о пользователе системы </summary>
         public Guid Id { get; set; }
         public string Username { get; set; }
-        public bool IsDeleted { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public string Role { get; set; }
     }
 }

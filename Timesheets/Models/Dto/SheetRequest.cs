@@ -2,7 +2,6 @@
 
 namespace Timesheets.Models.Dto
 {
-    /// <summary>Dto модель запроса, для ведомости затраченого времени </summary>
     public class SheetRequest
     {
         public DateTime Date { get; set; }
